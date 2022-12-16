@@ -3,6 +3,7 @@ package com.zzimkong.h2.yogurt.controller;
 import com.zzimkong.h2.yogurt.domain.Yogurt;
 import com.zzimkong.h2.yogurt.service.YogurtCommandService;
 import com.zzimkong.h2.yogurt.service.YogurtQueryService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,8 @@ public class YogurtController {
 
     @GetMapping(value = "", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     @ResponseBody
-    public Flux<Yogurt> findAll() {
-        return yogurtQueryService.selectYogurts();
+    public Flux<Yogurt> findAll(@RequestParam(value = "page", defaultValue = "0") int page,
+                                @RequestParam(value = "size", defaultValue = "10") int size) {
+        return yogurtQueryService.selectYogurts(PageRequest.of(page, size));
     }
 }
