@@ -4,6 +4,7 @@ import com.zzimkong.h2.yogurt.domain.Yogurt;
 import com.zzimkong.h2.yogurt.domain.YogurtRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Mono;
 
 @Service
 @Transactional
@@ -14,7 +15,7 @@ public class YogurtCommandService {
         this.yogurtRepository = yogurtRepository;
     }
 
-    public void createYogurt(Yogurt yogurt) {
-        yogurtRepository.save(yogurt).subscribe();
+    public Mono<Yogurt> createYogurt(Yogurt yogurt) {
+        return yogurtRepository.save(yogurt);
     }
 }

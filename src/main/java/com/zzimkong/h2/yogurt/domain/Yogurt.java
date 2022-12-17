@@ -17,7 +17,7 @@ public class Yogurt {
     private YogurtType type;
     private double price;
 
-    Yogurt(String name, YogurtType type, double price) {
+    public Yogurt(String name, YogurtType type, double price) {
         this.name = name;
         this.type = type;
         this.price = price;
