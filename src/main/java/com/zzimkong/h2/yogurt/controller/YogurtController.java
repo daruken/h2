@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/yogurts")
@@ -27,9 +28,13 @@ public class YogurtController {
     }
 
     @GetMapping(value = "", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    @ResponseBody
     public Flux<Yogurt> findAll(@RequestParam(value = "page", defaultValue = "0") int page,
                                 @RequestParam(value = "size", defaultValue = "10") int size) {
         return yogurtQueryService.selectYogurts(PageRequest.of(page, size));
+    }
+
+    @GetMapping(value = "/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Mono<Yogurt> findYogurt(@PathVariable String id) {
+        return yogurtQueryService.selectYogurtById(id);
     }
 }

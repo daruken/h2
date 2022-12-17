@@ -5,6 +5,7 @@ import com.zzimkong.h2.yogurt.domain.YogurtRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class YogurtQueryService {
@@ -18,5 +19,9 @@ public class YogurtQueryService {
         return yogurtRepository.findAll()
                 .skip((long) pageable.getPageNumber() * pageable.getPageSize())
                 .take(pageable.getPageSize());
+    }
+
+    public Mono<Yogurt> selectYogurtById(String id) {
+        return yogurtRepository.findById(id);
     }
 }
