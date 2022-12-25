@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
@@ -23,6 +24,7 @@ import static org.mockito.Mockito.times;
 @ExtendWith(SpringExtension.class)
 @WebFluxTest(controllers = YogurtController.class)
 @Import({YogurtCommandService.class, YogurtQueryService.class})
+@ActiveProfiles("test")
 public class YogurtServiceUnitTest {
 
     @MockBean

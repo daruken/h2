@@ -1,15 +1,17 @@
 package com.zzimkong.h2.yogurt.domain;
 
 import com.zzimkong.h2.yogurt.domain.type.YogurtType;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Getter
-@Setter
-@ToString
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Document
 public class Yogurt {
     private @Id String id;
