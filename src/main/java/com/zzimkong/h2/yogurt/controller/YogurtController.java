@@ -38,4 +38,10 @@ public class YogurtController {
     public Mono<Yogurt> findYogurt(@PathVariable String id) {
         return yogurtQueryService.selectYogurtById(id);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void removeYogurt(@PathVariable String id) {
+        yogurtCommandService.deleteYogurt(id).subscribe();
+    }
 }

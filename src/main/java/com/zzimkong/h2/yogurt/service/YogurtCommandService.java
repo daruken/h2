@@ -18,4 +18,8 @@ public class YogurtCommandService {
     public Mono<Yogurt> createYogurt(Yogurt yogurt) {
         return yogurtRepository.save(yogurt);
     }
+
+    public Mono<Void> deleteYogurt(String id) {
+        return yogurtRepository.deleteById(id);
+    }
 }
