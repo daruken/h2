@@ -38,10 +38,8 @@ public class JwtTokenProvider {
     }
 
     public String createToken(Authentication authentication) {
-
-        String username = authentication.getName();
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        Claims claims = Jwts.claims().setSubject(username);
+        Claims claims = Jwts.claims().setSubject(authentication.getName());
         if (!authorities.isEmpty()) {
             claims.put(AUTHORITIES_KEY, authorities.stream().map(GrantedAuthority::getAuthority).collect(joining(",")));
         }
@@ -55,7 +53,6 @@ public class JwtTokenProvider {
                 .setExpiration(validity)
                 .signWith(this.secretKey, SignatureAlgorithm.HS256)
                 .compact();
-
     }
 
     public Authentication getAuthentication(String token) {
