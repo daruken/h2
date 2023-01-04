@@ -5,6 +5,7 @@ import com.zzimkong.h2.yogurt.service.YogurtCommandService;
 import com.zzimkong.h2.yogurt.service.YogurtQueryService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -41,7 +42,9 @@ public class YogurtController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void removeYogurt(@PathVariable String id) {
-        yogurtCommandService.deleteYogurt(id).subscribe();
+    public Mono<ResponseEntity<Void>> removeYogurt(@PathVariable String id) {
+        return yogurtCommandService.deleteYogurt(id)
+                .map(r -> ResponseEntity.ok().<Void>build())
+                .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 }
