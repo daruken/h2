@@ -2,7 +2,6 @@ package com.zzimkong.h2.user.controller;
 
 import com.zzimkong.h2.security.JwtTokenProvider;
 import com.zzimkong.h2.user.controller.dto.AuthenticationRequest;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,16 +16,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequiredArgsConstructor
 public class AuthController {
     private final JwtTokenProvider jwtTokenProvider;
     private final ReactiveAuthenticationManager authenticationManager;
+
+    public AuthController(JwtTokenProvider jwtTokenProvider, ReactiveAuthenticationManager authenticationManager) {
+        this.jwtTokenProvider = jwtTokenProvider;
+        this.authenticationManager = authenticationManager;
+    }
 
     @PostMapping("/login")
     public Mono<ResponseEntity<Map<String, String>>> login(@RequestBody Mono<AuthenticationRequest> authenticationRequest) {
         return authenticationRequest
                 .flatMap(login -> this.authenticationManager
-                        .authenticate(new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword()))
+                        .authenticate(new UsernamePasswordAuthenticationToken(login.getName(), login.getPassword()))
                         .map(this.jwtTokenProvider::createToken)
                 )
                 .map(jwt -> {
